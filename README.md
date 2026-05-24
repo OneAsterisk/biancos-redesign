@@ -78,28 +78,52 @@ and live schedules. See [`src/lib/addToCalendar.ts`](src/lib/addToCalendar.ts).
 
 ```
 src/
-  main.tsx              Router + entry
-  App.tsx               Layout (Nav + Outlet + Footer)
+  main.tsx              App entry (mounts router)
+  routes.tsx            All routes in one place
+  App.tsx               Layout shell (Nav + Outlet + Footer)
   index.css             Tailwind v4 theme tokens, type system, effects
-  sections.css          Ported section layout from the design prototype
-  components/           Nav, Footer, Hero, Marquee, ImageSlot, PageHeader,
-                        HeritageCarousel, Schedule, sections/*
-  pages/                Home, About, SchedulePage, PhotosPage, VisitPage
-  data/                 classes.ts (class types + static week), services.ts
-  lib/                  googleCalendar.ts (read), addToCalendar.ts (add-link)
-  hooks/                useSchedule.ts (merges live + static)
+  sections.css          Section layout from the design prototype
+  pages/                One file per route — thin composers only
+  components/
+    Nav, Footer, Marquee, ImageSlot, PageHeader, Schedule, …
+    sections/           Full-width page blocks used by inner pages
+      home/             Home-only: HomeHero, AboutTeaser, strips, CTA
+      Heritage.tsx, Services.tsx, Photos.tsx, Visit.tsx
+  data/                 Content + config (edit here before hunting JSX)
+    assets.ts           Image paths + shared placeholders
+    classes.ts          Class types + static weekly schedule
+    services.ts         Services grid + home strip rows
+    homeScheduleTeaser.ts   Home schedule highlight list
+    heritageCarousel.ts About carousel slide list
+    photos.ts           /photos grid slide list
+  lib/                  googleCalendar.ts, addToCalendar.ts
+  hooks/                useSchedule.ts
 ```
+
+### Where to change what
+
+| You want to… | Go to |
+| ------------ | ----- |
+| Edit home hero, teasers, or CTA copy/layout | `src/components/sections/home/*.tsx` |
+| Change a home page section order | `src/pages/Home.tsx` |
+| Add or swap an image path used in multiple places | `src/data/assets.ts` (+ file in `public/assets/`) |
+| Update class schedule / types | `src/data/classes.ts` |
+| Home schedule sidebar highlights | `src/data/homeScheduleTeaser.ts` |
+| About story + services grid | `src/components/sections/Heritage.tsx`, `Services.tsx` |
+| About photo carousel slides | `src/data/heritageCarousel.ts` |
+| Facility photo grid | `src/data/photos.ts` |
+| Add a route | `src/routes.tsx` + new page under `src/pages/` |
 
 ## Photos / drop-zones
 
 The design uses placeholder "drop-zones" for client-supplied photos. They render
-as labeled placeholders via the `ImageSlot` component until you pass a `src`:
+as labeled placeholders via `ImageSlot` until you set a `src`:
 
-- **Home:** logo badge (nav), hero shot, about-teaser photo
-- **About:** 5 carousel slides (`src/components/HeritageCarousel.tsx`)
-- **Photos:** 6 facility photos (`src/components/sections/Photos.tsx`)
+- **Home:** logo + hero → `sections/home/HomeHero.tsx`; about teaser → `AboutTeaser.tsx` (paths in `data/assets.ts`)
+- **About:** carousel → `data/heritageCarousel.ts`
+- **Photos:** grid → `data/photos.ts`
 
-Drop real images into `src/assets/` and set the `src` prop on the relevant slot.
+Put files in `public/assets/` and reference them from `src/data/assets.ts` (or add `src` on the relevant data row).
 
 ## Notes
 
