@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import { SERVICES } from "../../data/services";
+import { SERVICE_TITLE_PATHS } from "../../data/servicePages";
 
 export function Services() {
   return (
@@ -20,20 +22,32 @@ export function Services() {
         </div>
 
         <div className="svc-grid">
-          {SERVICES.map((s) => (
-            <div className="svc-card" key={s.num}>
-              <div className="flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span className="svc-num">{s.num} / 06</span>
-                <span className="chip">{s.tag}</span>
+          {SERVICES.map((s) => {
+            const path = SERVICE_TITLE_PATHS[s.title];
+            const card = (
+              <>
+                <div className="flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span className="svc-num">{s.num} / 06</span>
+                  <span className="chip">{s.tag}</span>
+                </div>
+                <h3>{s.title}</h3>
+                <p>{s.copy}</p>
+                <div className="svc-foot">
+                  <span>{path ? "Learn more" : "On the floor"}</span>
+                  <span className="svc-arrow">→</span>
+                </div>
+              </>
+            );
+            return path ? (
+              <Link className="svc-card" key={s.num} to={path} style={{ textDecoration: "none", color: "inherit" }}>
+                {card}
+              </Link>
+            ) : (
+              <div className="svc-card" key={s.num}>
+                {card}
               </div>
-              <h3>{s.title}</h3>
-              <p>{s.copy}</p>
-              <div className="svc-foot">
-                <span>Learn more</span>
-                <span className="svc-arrow">→</span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

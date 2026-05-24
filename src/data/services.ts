@@ -29,7 +29,7 @@ export const SERVICES: Service[] = [
   {
     num: "04",
     title: "TaeKwon-Do",
-    copy: "Traditional ITF curriculum for all ages — yellow belt to black. Tue/Thu evenings.",
+    copy: "Traditional ITF curriculum for all ages — yellow belt to black. Wednesday evenings.",
     tag: "Program",
   },
   {
@@ -47,11 +47,11 @@ export const SERVICES: Service[] = [
 ];
 
 // Condensed list used on the Home services strip.
-export const SERVICE_STRIP: [string, string, string][] = [
-  ["01", "Open floor", "24/7 with swipe card"],
-  ["02", "Senior Strong", "Mon · Wed · Fri"],
-  ["03", "Pump", "Tue · Thu · 5:15a"],
-  ["04", "Yoga & Yoga Strong", "Wed · Mon"],
-  ["05", "TaeKwon-Do", "Tue · Thu evenings"],
-  ["06", "Massage Therapy", "By appointment"],
+export const SERVICE_STRIP: { num: string; name: string; when: string; to?: string }[] = [
+  { num: "01", name: "Open floor", when: "24/7 with swipe card" },
+  { num: "02", name: "Senior Strong", when: "Mon · Wed · Fri", to: "/services/senior-strong" },
+  { num: "03", name: "Pump", when: "Tue · Thu · 5:15a" },
+  { num: "04", name: "Yoga & Yoga Strong", when: "Wed · Mon" },
+  { num: "05", name: "TaeKwon-Do", when: "Wed evenings", to: "/services/taekwondo" },
+  { num: "06", name: "Massage Therapy", when: "By appointment", to: "/services/massage" },
 ];

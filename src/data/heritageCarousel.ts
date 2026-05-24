@@ -1,9 +1,8 @@
-export interface HeritageCarouselSlide {
-  id: string;
-  label: string;
-  placeholder: string;
-  src?: string;
-}
+import type { CarouselSlide } from "./carouselSlides";
+
+export type { CarouselSlide };
+
+export interface HeritageCarouselSlide extends CarouselSlide {}
 
 export const HERITAGE_CAROUSEL_SLIDES: HeritageCarouselSlide[] = [
   {

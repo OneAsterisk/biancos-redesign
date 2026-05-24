@@ -7,6 +7,7 @@ interface ImageSlotProps {
   alt?: string;
   placeholder: string;
   shape?: "rect" | "circle";
+  fit?: "cover" | "contain";
   className?: string;
 }
 
@@ -15,16 +16,18 @@ export function ImageSlot({
   alt,
   placeholder,
   shape = "rect",
+  fit = "cover",
   className = "",
 }: ImageSlotProps) {
   const radius = shape === "circle" ? "rounded-full" : "";
+  const objectFit = fit === "contain" ? "object-contain" : "object-cover";
 
   if (src) {
     return (
       <img
         src={src}
         alt={alt ?? placeholder}
-        className={`h-full w-full object-cover ${radius} ${className}`}
+        className={`h-full w-full ${objectFit} ${radius} ${className}`}
       />
     );
   }

@@ -29,14 +29,25 @@ export function HomeServicesStrip() {
           </Link>
         </div>
         <div className="strip-list">
-          {SERVICE_STRIP.map(([n, name, when]) => (
-            <div className="strip-row" key={n}>
-              <span className="strip-num">{n}</span>
-              <span className="strip-name">{name}</span>
-              <span className="strip-when">{when}</span>
-              <span className="strip-arrow">→</span>
-            </div>
-          ))}
+          {SERVICE_STRIP.map(({ num, name, when, to }) => {
+            const row = (
+              <>
+                <span className="strip-num">{num}</span>
+                <span className="strip-name">{name}</span>
+                <span className="strip-when">{when}</span>
+                <span className="strip-arrow">→</span>
+              </>
+            );
+            return to ? (
+              <Link className="strip-row" key={num} to={to} style={{ textDecoration: "none", color: "inherit" }}>
+                {row}
+              </Link>
+            ) : (
+              <div className="strip-row" key={num}>
+                {row}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

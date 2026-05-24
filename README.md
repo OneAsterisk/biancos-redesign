@@ -17,6 +17,10 @@ est. 1998), implemented from the Claude Design handoff bundle.
 | `/schedule`  | Schedule | Filterable weekly grid + Google Calendar integration (see below)     |
 | `/photos`    | Photos   | Asymmetric facility-tour grid                                        |
 | `/visit`     | Visit    | Hours, address, phone, this-week classes                            |
+| `/services/massage`        | Massage       | On-site therapists and booking info              |
+| `/services/senior-strong`  | Senior Strong | 60+ strength program overview                    |
+| `/services/taekwondo`      | TaeKwon-Do    | Wednesday youth and adult class times            |
+| `/services/wellness-way`   | Wellness Way  | Partner clinic hours and links                     |
 
 ## Getting started
 

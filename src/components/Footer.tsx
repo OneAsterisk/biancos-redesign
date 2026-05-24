@@ -29,17 +29,17 @@ export function Footer() {
             <ul>
               <li><Link to="/schedule">Class schedule</Link></li>
               <li><Link to="/about">Programs</Link></li>
-              <li><Link to="/about">TaeKwon-Do</Link></li>
-              <li><Link to="/about">Massage</Link></li>
+              <li><Link to="/services/senior-strong">Senior Strong</Link></li>
+              <li><Link to="/services/taekwondo">TaeKwon-Do</Link></li>
             </ul>
           </div>
           <div>
-            <h4>About</h4>
+            <h4>Services</h4>
             <ul>
+              <li><Link to="/services/massage">Massage</Link></li>
+              <li><Link to="/services/wellness-way">Wellness Way</Link></li>
               <li><Link to="/about">Our story</Link></li>
               <li><Link to="/photos">The floor</Link></li>
-              <li><Link to="/visit">Visit</Link></li>
-              <li><Link to="/about">Wellness Way</Link></li>
             </ul>
           </div>
           <div>

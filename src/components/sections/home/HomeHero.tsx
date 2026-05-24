@@ -20,7 +20,11 @@ export function HomeHero() {
         >
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <div style={{ width: 64, height: 64, flex: "0 0 64px" }}>
-              <ImageSlot placeholder={IMAGE_PLACEHOLDERS.logo} shape="circle" />
+              <ImageSlot
+                placeholder={IMAGE_PLACEHOLDERS.logo}
+                shape="circle"
+                src="assets/biancos.jpg"
+              />
             </div>
             <div className="stack-tight">
               <div className="mono" style={{ color: "var(--ink-3)" }}>
