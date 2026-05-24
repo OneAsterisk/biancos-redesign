@@ -10,6 +10,17 @@ export const ASSETS = {
     beltMeaning: "/assets/belt-meaning.webp",
     flags: "/assets/TK-Flags-1-768x282.jpg",
   },
+  massage: {
+    heidi: "/assets/Massage-Heidi-1024x490.jpg",
+    ironIvory: "/assets/iron-ivory.jpg",
+    ironIvoryFacebook: "https://www.facebook.com/profile.php?id=100089386638733",
+  },
+  wellnessWay: {
+    logo: "/assets/wellness-way-1024x538.jpg",
+    staff: "/assets/wellness-way-Iron-Mtn-683x1024.jpg",
+    facebook: "https://www.facebook.com/TWWIronMountain/",
+    webpage: "https://www.thewellnessway.com/clinics/mi/ironmountain/wellness-center/",
+  },
 } as const;
 
 /** Default placeholder copy for ImageSlot until real media is wired. */

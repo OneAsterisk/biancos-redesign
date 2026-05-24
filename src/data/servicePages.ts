@@ -65,35 +65,36 @@ export const SERVICE_PAGES: ServicePageData[] = [
     title: "Three therapists under one roof.",
     redWord: "therapists",
     intro:
-      "Licensed massage on the Bianco's campus — therapeutic, deep-tissue, and sport-specific work by appointment. Enter through the north doors and take a right at the front desk.",
+      "Three independent massage therapists inside Bianco's — contact each directly for appointments and pricing. Enter through the center doors between the gym entrance and Wellness Way.",
     tag: "By appointment",
     blocks: [
       {
         paragraphs: [
-          "We keep three massage therapists on site so members can book recovery around a lift or a class. Walk-ins depend on availability; calling ahead is the surest way to get a slot.",
-          "When you arrive, use the north entrance, check in at the front desk, and they'll point you to the therapy room.",
+          "There are three separate massage therapists located in the Bianco's Fitness facility. Please contact them to schedule any appointments or for pricing.",
+          "When entering for your massage, please enter through the center doors that are between the gym door and Wellness Way. There is a sitting area where you can relax until your massage therapist comes out for you!",
         ],
       },
       {
         heading: "Therapeutic Massage by Heidi Rizzo",
-        paragraphs: [
-          "Heidi offers therapeutic massage with a focus on recovery and chronic tension. Contact her directly to schedule.",
-        ],
-        imagePlaceholder: "Drop in: Heidi Rizzo business card or headshot",
+        imageSrc: ASSETS.massage.heidi,
+        imageAlt: "Therapeutic Massage by Heidi Rizzo contact card",
+        imagePlaceholder: "Heidi Rizzo therapeutic massage",
+        imageLayout: "fit",
       },
       {
-        heading: "Iron & Ivory Massage Therapies",
-        paragraphs: [
-          "Marissa and Abygail practice at Iron & Ivory Massage Therapies, also located at Bianco's. Follow their page for specials and availability.",
-        ],
+        heading: "Iron and Ivory Massage Therapies",
+        imageSrc: ASSETS.massage.ironIvory,
+        imageAlt: "Iron and Ivory Massage Therapies logo",
+        imagePlaceholder: "Iron and Ivory Massage Therapies",
+        imageLayout: "fit",
         contacts: [
-          { name: "Marissa", note: "Iron & Ivory" },
-          { name: "Abygail", note: "Iron & Ivory" },
+          { name: "Marissa", phone: "906-282-3314" },
+          { name: "Abygail", phone: "906-239-4244" },
         ],
         links: [
           {
-            label: "Iron & Ivory on Facebook",
-            href: "https://www.facebook.com",
+            label: "Iron and Ivory's Facebook Page",
+            href: `https://www.facebook.com/profile.php?id=100089386638733`,
             external: true,
           },
         ],
@@ -165,10 +166,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
       },
       {
         heading: "Every Wednesday",
-        schedule: [
-          "Youth — 5:30 PM to 6:25 PM",
-          "Adult — 6:30 PM to 7:45 PM",
-        ],
+        schedule: ["Youth — 5:30 PM to 6:25 PM", "Adult — 6:30 PM to 7:45 PM"],
       },
       {
         heading: "Taekwon-Do Federation license",
@@ -210,42 +208,46 @@ export const SERVICE_PAGES: ServicePageData[] = [
     title: "Wellness coaching on campus.",
     redWord: "Wellness",
     intro:
-      "The Wellness Way clinic at Bianco's — walk-in nutrition, recovery, and wellness coaching for members and the broader Kingsford community.",
+      "The Wellness Way clinic at Bianco's — nutrition, recovery, and wellness coaching for members and the Iron Mountain / Kingsford community.",
     tag: "Partner",
     blocks: [
       {
         paragraphs: [
           "The Wellness Way operates a clinic inside Bianco's Fitness Center, offering a puzzle-piece approach to health — connecting nutrition, movement, and recovery so the pieces fit together.",
-          "Members and non-members alike can stop in during clinic hours or follow their Facebook page for updates and events.",
+          "Stop in during clinic hours or follow their Iron Mountain Facebook page for updates and events.",
         ],
-        imagePlaceholder: "Drop in: The Wellness Way logo",
-        links: [
-          {
-            label: "Visit The Wellness Way website",
-            href: "https://www.thewellnessway.com",
-            external: true,
-          },
-        ],
+        imageSrc: ASSETS.wellnessWay.logo,
+        imageAlt: "The Wellness Way logo",
+        imagePlaceholder: "The Wellness Way logo",
+        imageLayout: "fit",
       },
       {
         heading: "Clinic hours",
         hours: [
-          { label: "Monday", value: "9:00 — 5:00" },
-          { label: "Tuesday", value: "9:00 — 5:00" },
-          { label: "Wednesday", value: "9:00 — 5:00" },
-          { label: "Thursday", value: "9:00 — 5:00" },
-          { label: "Friday", value: "9:00 — 5:00" },
+          { label: "Monday", value: "8:30 — 12:00 · 2:00 — 6:00" },
+          { label: "Tuesday", value: "2:00 — 6:00" },
+          { label: "Wednesday", value: "8:30 — 12:00 · 2:00 — 6:00" },
+          { label: "Thursday", value: "8:30 — 12:00 · 2:00 — 6:00" },
+          { label: "Friday", value: "8:30 — 12:00" },
         ],
         links: [
           {
-            label: "The Wellness Way on Facebook",
-            href: "https://www.facebook.com",
+            label: "Follow on Facebook",
+            href: ASSETS.wellnessWay.facebook,
+            external: true,
+          },
+          {
+            label: "Visit their webpage",
+            href: ASSETS.wellnessWay.webpage,
             external: true,
           },
         ],
       },
       {
-        imagePlaceholder: "Drop in: Wellness Way staff photo",
+        imageSrc: ASSETS.wellnessWay.staff,
+        imageAlt: "The Wellness Way Iron Mountain team",
+        imagePlaceholder: "The Wellness Way Iron Mountain team",
+        imageLayout: "tall",
       },
     ],
   },

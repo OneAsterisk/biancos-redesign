@@ -25,6 +25,23 @@ export function Nav() {
   const menuId = useId();
   const mobileMenuId = useId();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const servicesCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openServices = () => {
+    if (servicesCloseTimerRef.current) {
+      clearTimeout(servicesCloseTimerRef.current);
+      servicesCloseTimerRef.current = null;
+    }
+    setServicesOpen(true);
+  };
+
+  const scheduleCloseServices = () => {
+    if (servicesCloseTimerRef.current) clearTimeout(servicesCloseTimerRef.current);
+    servicesCloseTimerRef.current = setTimeout(() => {
+      setServicesOpen(false);
+      servicesCloseTimerRef.current = null;
+    }, 350);
+  };
 
   const closeMobile = () => {
     setMobileOpen(false);
@@ -39,10 +56,21 @@ export function Nav() {
   }, []);
 
   useEffect(() => {
+    if (servicesCloseTimerRef.current) {
+      clearTimeout(servicesCloseTimerRef.current);
+      servicesCloseTimerRef.current = null;
+    }
     setServicesOpen(false);
     setMobileOpen(false);
     setMobileServicesOpen(false);
   }, [pathname]);
+
+  useEffect(
+    () => () => {
+      if (servicesCloseTimerRef.current) clearTimeout(servicesCloseTimerRef.current);
+    },
+    [],
+  );
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -103,8 +131,8 @@ export function Nav() {
           <div
             className={`nav-dropdown${servicesOpen ? " open" : ""}`}
             ref={dropdownRef}
-            onMouseEnter={() => setServicesOpen(true)}
-            onMouseLeave={() => setServicesOpen(false)}
+            onMouseEnter={openServices}
+            onMouseLeave={scheduleCloseServices}
           >
             <button
               type="button"
