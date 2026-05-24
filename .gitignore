@@ -1,0 +1,23 @@
+node_modules
+dist
+dist-ssr
+*.local
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Design handoff bundle (kept out of the app build)
+_design_bundle/
+design.html
+design.html.gz

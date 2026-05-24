@@ -1,0 +1,312 @@
+@import "tailwindcss";
+@import "./sections.css";
+
+/* ----------------------------------------------------------------------------
+   Bianco's Fitness Center — heritage-strength design system
+   Ported from the Claude Design HTML/CSS prototype.
+   Palette: weathered cream + heritage red + warm black.
+   Type:    Anton (display) · Oswald (subheads) · DM Sans (body) · JetBrains Mono
+---------------------------------------------------------------------------- */
+
+@theme {
+  --color-cream: #f2ead9;
+  --color-cream-2: #eadfc8;
+  --color-cream-3: #e2d5b8;
+  --color-paper: #faf5ea;
+  --color-ink: #161310;
+  --color-ink-2: #2a241f;
+  --color-ink-3: #534940;
+  --color-muted: #7a6e62;
+  --color-red: #b8302a;
+  --color-red-dark: #8e2620;
+  --color-red-deep: #5e1814;
+  --color-gold: #c89b3c;
+
+  --font-display: "Anton", Impact, sans-serif;
+  --font-oswald: "Oswald", sans-serif;
+  --font-body: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Short aliases so the ported section CSS can reference tokens unprefixed. */
+:root {
+  --cream: var(--color-cream);
+  --cream-2: var(--color-cream-2);
+  --cream-3: var(--color-cream-3);
+  --paper: var(--color-paper);
+  --ink: var(--color-ink);
+  --ink-2: var(--color-ink-2);
+  --ink-3: var(--color-ink-3);
+  --muted: var(--color-muted);
+  --red: var(--color-red);
+  --red-dark: var(--color-red-dark);
+  --red-deep: var(--color-red-deep);
+  --gold: var(--color-gold);
+}
+
+/* Density tokens — driven by [data-density] on <html>. "regular" is default. */
+:root {
+  --pad-section: 120px;
+  --gap-lg: 48px;
+  --gap-md: 24px;
+  --hero-headline: clamp(80px, 14vw, 240px);
+}
+html[data-density="compact"] {
+  --pad-section: 72px;
+  --gap-lg: 32px;
+  --gap-md: 16px;
+  --hero-headline: clamp(64px, 11vw, 180px);
+}
+html[data-density="comfy"] {
+  --pad-section: 160px;
+  --gap-lg: 64px;
+  --gap-md: 32px;
+  --hero-headline: clamp(96px, 16vw, 280px);
+}
+
+@layer base {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+  body {
+    overflow-x: hidden;
+  }
+  a {
+    color: inherit;
+  }
+  img {
+    display: block;
+    max-width: 100%;
+  }
+  /* anchor offsets for sticky nav */
+  section[id] {
+    scroll-margin-top: 120px;
+  }
+}
+
+@layer components {
+  /* --- type system --- */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0.005em;
+    line-height: 0.84;
+    text-transform: uppercase;
+  }
+  .oswald {
+    font-family: var(--font-oswald);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .mono {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+  }
+
+  /* --- shared chrome --- */
+  .container-x {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  @media (max-width: 640px) {
+    .container-x {
+      padding: 0 20px;
+    }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: clamp(48px, 7vw, 112px);
+    line-height: 0.88;
+    letter-spacing: 0.005em;
+  }
+
+  .rule {
+    height: 1px;
+    background: var(--color-ink);
+    opacity: 0.16;
+    width: 100%;
+  }
+
+  .stack-tight > * + * {
+    margin-top: 8px;
+  }
+
+  /* badge / chip */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--color-ink);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .chip-red {
+    background: var(--color-red);
+    color: var(--color-paper);
+    border-color: var(--color-red);
+  }
+
+  /* button */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-oswald);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 18px 26px;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  .btn-primary {
+    background: var(--color-red);
+    color: var(--color-paper);
+  }
+  .btn-primary:hover {
+    background: var(--color-red-dark);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-ink);
+  }
+  .btn-ghost:hover {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+  .btn-arrow {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1;
+    transition: transform 0.2s ease;
+  }
+  .btn-arrow::before {
+    content: "\2192";
+  }
+  .btn:hover .btn-arrow {
+    transform: translateX(4px);
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Bespoke effects that don't map cleanly to utilities
+---------------------------------------------------------------------------- */
+
+/* film-grain noise overlay for that "weathered" warmth */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.09  0 0 0 0 0.075  0 0 0 0 0.06  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
+  mix-blend-mode: multiply;
+  opacity: 0.18;
+}
+
+/* marquee */
+.marquee-track {
+  display: inline-flex;
+  gap: 48px;
+  animation: marq 38s linear infinite;
+  font-family: var(--font-display);
+  font-size: 48px;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.marquee-track span {
+  display: inline-flex;
+  align-items: center;
+  gap: 48px;
+}
+@keyframes marq {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* hero headline strokes */
+.text-stroke-ink {
+  -webkit-text-stroke: 2px var(--color-ink);
+  color: transparent;
+}
+.text-stroke-cream {
+  -webkit-text-stroke: 2px var(--color-cream);
+  color: transparent;
+}
+
+/* pulsing 24/7 dot */
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.7);
+  }
+}
+.pulse-dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-paper);
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+/* carousel transition */
+.carousel-track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  transition: transform 0.55s cubic-bezier(0.65, 0.05, 0.35, 1);
+}
