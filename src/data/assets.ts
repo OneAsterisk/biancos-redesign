@@ -4,6 +4,9 @@
  */
 export const ASSETS = {
   building: "/assets/biancos-building-1024x726.jpg",
+  buildingWebp: "/assets/biancos-building-1024x726.webp",
+  logoWebp: "/assets/biancos-128.webp",
+  logo: "/assets/biancos.jpg",
   taekwondo: {
     logo: "/assets/TK-logo-1024x1024.jpg",
     belts: "/assets/TK-belts-658x1024.jpg",

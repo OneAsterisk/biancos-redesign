@@ -23,7 +23,10 @@ export function HomeHero() {
               <ImageSlot
                 placeholder={IMAGE_PLACEHOLDERS.logo}
                 shape="circle"
-                src="assets/biancos.jpg"
+                src={ASSETS.logo}
+                webpSrc={ASSETS.logoWebp}
+                width={64}
+                height={64}
               />
             </div>
             <div className="stack-tight">
@@ -123,7 +126,11 @@ export function HomeHero() {
           </div>
           <ImageSlot
             src={ASSETS.building}
+            webpSrc={ASSETS.buildingWebp}
             placeholder={IMAGE_PLACEHOLDERS.homeHero}
+            width={1024}
+            height={726}
+            priority
           />
         </div>
       </div>

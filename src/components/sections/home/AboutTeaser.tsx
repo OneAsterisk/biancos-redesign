@@ -41,7 +41,10 @@ export function AboutTeaser() {
           <div className="teaser-photo">
             <ImageSlot
               src={ASSETS.building}
+              webpSrc={ASSETS.buildingWebp}
               placeholder={IMAGE_PLACEHOLDERS.homeAboutTeaser}
+              width={1024}
+              height={726}
             />
           </div>
         </div>

@@ -4,32 +4,55 @@
 
 interface ImageSlotProps {
   src?: string;
+  /** Smaller modern format; rendered inside <picture> when set. */
+  webpSrc?: string;
   alt?: string;
   placeholder: string;
   shape?: "rect" | "circle";
   fit?: "cover" | "contain";
   className?: string;
+  width?: number;
+  height?: number;
+  /** Set on above-the-fold / LCP images. */
+  priority?: boolean;
 }
 
 export function ImageSlot({
   src,
+  webpSrc,
   alt,
   placeholder,
   shape = "rect",
   fit = "cover",
   className = "",
+  width,
+  height,
+  priority = false,
 }: ImageSlotProps) {
   const radius = shape === "circle" ? "rounded-full" : "";
   const objectFit = fit === "contain" ? "object-contain" : "object-cover";
+  const imgClass = `h-full w-full ${objectFit} ${radius} ${className}`;
+  const imgProps = {
+    alt: alt ?? placeholder,
+    className: imgClass,
+    width,
+    height,
+    decoding: priority ? ("sync" as const) : ("async" as const),
+    fetchPriority: priority ? ("high" as const) : undefined,
+    loading: priority ? ("eager" as const) : ("lazy" as const),
+  };
 
   if (src) {
-    return (
-      <img
-        src={src}
-        alt={alt ?? placeholder}
-        className={`h-full w-full ${objectFit} ${radius} ${className}`}
-      />
-    );
+    if (webpSrc) {
+      return (
+        <picture className="block h-full w-full">
+          <source srcSet={webpSrc} type="image/webp" />
+          <img src={src} {...imgProps} />
+        </picture>
+      );
+    }
+
+    return <img src={src} {...imgProps} />;
   }
 
   return (

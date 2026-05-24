@@ -99,7 +99,7 @@ src/
     services.ts         Services grid + home strip rows
     homeScheduleTeaser.ts   Home schedule highlight list
     heritageCarousel.ts About carousel slide list
-    photos.ts           /photos grid slide list
+    facilityPhotos.ts  /photos facility gallery
   lib/                  googleCalendar.ts, addToCalendar.ts
   hooks/                useSchedule.ts
 ```
@@ -115,7 +115,7 @@ src/
 | Home schedule sidebar highlights | `src/data/homeScheduleTeaser.ts` |
 | About story + services grid | `src/components/sections/Heritage.tsx`, `Services.tsx` |
 | About photo carousel slides | `src/data/heritageCarousel.ts` |
-| Facility photo grid | `src/data/photos.ts` |
+| Facility photo gallery | `src/data/facilityPhotos.ts` |
 | Add a route | `src/routes.tsx` + new page under `src/pages/` |
 
 ## Photos / drop-zones
@@ -125,7 +125,7 @@ as labeled placeholders via `ImageSlot` until you set a `src`:
 
 - **Home:** logo + hero → `sections/home/HomeHero.tsx`; about teaser → `AboutTeaser.tsx` (paths in `data/assets.ts`)
 - **About:** carousel → `data/heritageCarousel.ts`
-- **Photos:** grid → `data/photos.ts`
+- **Photos:** masonry gallery → `data/facilityPhotos.ts` (images in `public/assets/facility-photos/`)
 
 Put files in `public/assets/` and reference them from `src/data/assets.ts` (or add `src` on the relevant data row).
 
