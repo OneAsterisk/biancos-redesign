@@ -5,64 +5,97 @@ import {
   type ClassType,
   type ScheduleDay,
 } from "../data/classes";
-import { calendarConfigured, fetchCalendarWeek } from "../lib/googleCalendar";
+import {
+  calendarConfigured,
+  emptyScheduleDays,
+  fetchCalendarRange,
+  scheduleRange,
+  type ScheduleRange,
+  type ScheduleView,
+} from "../lib/googleCalendar";
 
 export type ScheduleSource = "static" | "google";
 
 export interface ScheduleState {
-  week: ScheduleDay[];
+  days: ScheduleDay[];
   types: ClassType[];
   source: ScheduleSource;
   loading: boolean;
   error: string | null;
+  range: ScheduleRange;
+  emptyMessage: string;
+}
+
+function fallbackDays(view: ScheduleView, range: ScheduleRange): ScheduleDay[] {
+  return view === "week" ? STATIC_WEEK : emptyScheduleDays(range);
+}
+
+function loadingDays(view: ScheduleView, range: ScheduleRange): ScheduleDay[] {
+  return calendarConfigured ? emptyScheduleDays(range) : fallbackDays(view, range);
 }
 
 /**
- * Provides the weekly schedule. If a Google Calendar is configured it loads
+ * Provides the schedule. If a Google Calendar iCal feed is configured it loads
  * live events; otherwise (or on failure) it falls back to the static week
- * defined in data/classes.ts. The UI is identical either way.
+ * defined in data/classes.ts.
  */
-export function useSchedule(ref?: Date): ScheduleState {
+export function useSchedule(view: ScheduleView, ref?: Date): ScheduleState {
+  const initialRange = scheduleRange(view, ref);
   const [state, setState] = useState<ScheduleState>({
-    week: STATIC_WEEK,
+    days: loadingDays(view, initialRange),
     types: CLASS_TYPES,
     source: "static",
     loading: calendarConfigured,
     error: null,
+    range: initialRange,
+    emptyMessage: initialRange.emptyMessage,
   });
 
   useEffect(() => {
+    const range = scheduleRange(view, ref);
+    setState((prev) => ({
+      ...prev,
+      days: loadingDays(view, range),
+      types: CLASS_TYPES,
+      source: "static",
+      range,
+      emptyMessage: range.emptyMessage,
+      loading: calendarConfigured,
+    }));
+
     if (!calendarConfigured) return;
     let cancelled = false;
 
-    fetchCalendarWeek(ref)
-      .then(({ week, types }) => {
+    fetchCalendarRange(view, ref)
+      .then(({ days, types, range }) => {
         if (cancelled) return;
-        // Keep static week if the calendar returned an empty week.
-        const hasClasses = week.some((d) => d.items.length > 0);
         setState({
-          week: hasClasses ? week : STATIC_WEEK,
+          days,
           types,
-          source: hasClasses ? "google" : "static",
+          source: "google",
           loading: false,
           error: null,
+          range,
+          emptyMessage: range.emptyMessage,
         });
       })
       .catch((err: unknown) => {
         if (cancelled) return;
         setState({
-          week: STATIC_WEEK,
+          days: fallbackDays(view, range),
           types: CLASS_TYPES,
           source: "static",
           loading: false,
           error: err instanceof Error ? err.message : "Failed to load calendar.",
+          range,
+          emptyMessage: range.emptyMessage,
         });
       });
 
     return () => {
       cancelled = true;
     };
-  }, [ref]);
+  }, [ref, view]);
 
   return state;
 }

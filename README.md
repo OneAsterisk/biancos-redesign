@@ -37,9 +37,10 @@ The Schedule page supports Google Calendar two ways, both optional:
 
 ### 1. Read classes from the gym's calendar (auto-populate the grid)
 
-Staff maintain a Google Calendar of classes; the website reads it and renders
-the current Mon–Fri week. "Adding more classes" is just adding events to that
-calendar — no code change needed.
+Staff maintain a Google Calendar of classes; the website reads its secret iCal
+feed and renders the selected day, week, or month. "Adding more classes" is
+just adding events to that calendar — no code change needed. If the selected
+range has no events, the Schedule page shows an empty-state message.
 
 **Setup:**
 
@@ -48,28 +49,23 @@ calendar — no code change needed.
    Titles are matched (case-insensitively) to the known class types in
    [`src/data/classes.ts`](src/data/classes.ts); unknown titles still appear and
    get their own filter pill.
-2. Make the calendar public: **Google Calendar → Settings → [your calendar] →
-   Access permissions → "Make available to public" (See all event details).**
-3. Copy the **Calendar ID** from **Settings → Integrate calendar**.
-4. In [Google Cloud Console](https://console.cloud.google.com/), enable the
-   **Google Calendar API** and create an **API key**.
-5. Copy `.env.example` to `.env` and fill in:
+2. Copy the **Secret address in iCal format** from **Google Calendar → Settings
+   → [your calendar] → Integrate calendar**.
+3. Set the server-only env var:
 
    ```
-   VITE_GOOGLE_CALENDAR_ID=your-calendar-id@group.calendar.google.com
-   VITE_GOOGLE_API_KEY=your-api-key
+   GOOGLE_CALENDAR_ICAL_URL=https://calendar.google.com/calendar/ical/.../basic.ics
    ```
 
-6. Restart the dev server. The schedule footer shows **● Live from Google
+   The frontend uses `/api/calendar`; Vercel serves that through
+   [`api/calendar.ts`](api/calendar.ts), and Vite dev proxies it through
+   [`vite.config.ts`](vite.config.ts). This avoids Google Calendar CORS errors
+   and keeps the secret address out of the browser bundle.
+4. Restart the dev server. The schedule footer shows **● Live from Google
    Calendar** when events are loading from the calendar.
 
-**Fallback:** If the env vars are unset, the request fails, or the week has no
-events, the grid falls back to the static schedule in `src/data/classes.ts`
-(the printed May 2026 calendar). The UI is identical either way.
-
-> Security note: an API key embedded in a frontend build is publicly visible.
-> Restrict it in the Cloud Console to the Calendar API and your site's HTTP
-> referrer. The key only grants read access to calendars you've made public.
+**Fallback:** If no iCal feed URL is configured or the request fails, the grid
+falls back to the static schedule in `src/data/classes.ts` for the weekly view.
 
 ### 2. "Add to my Google Calendar" links
 
