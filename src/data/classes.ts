@@ -1,6 +1,6 @@
 // Class types and the static weekly schedule.
 // This data matches the gym's real May 2026 calendar and serves as the
-// fallback when no live Google Calendar is configured (see lib/googleCalendar.ts).
+// fallback when no live iCal schedule is configured (see lib/googleCalendar.ts).
 
 export interface ClassType {
   id: string;

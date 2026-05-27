@@ -38,7 +38,7 @@ export function ImageSlot({
     width,
     height,
     decoding: priority ? ("sync" as const) : ("async" as const),
-    fetchPriority: priority ? ("high" as const) : undefined,
+    fetchpriority: priority ? ("high" as const) : undefined,
     loading: priority ? ("eager" as const) : ("lazy" as const),
   };
 

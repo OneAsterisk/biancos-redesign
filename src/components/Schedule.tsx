@@ -2,6 +2,13 @@ import { useMemo, useState } from "react";
 import { classType, type ClassItem, type ClassType, type ScheduleDay } from "../data/classes";
 import { googleCalendarAddUrl } from "../lib/addToCalendar";
 import { useSchedule } from "../hooks/useSchedule";
+import type { ScheduleView } from "../lib/googleCalendar";
+
+const VIEW_LABELS: Record<ScheduleView, string> = {
+  day: "Day",
+  week: "Week",
+  month: "Month",
+};
 
 function FilterPill({
   type,
@@ -25,8 +32,33 @@ function FilterPill({
   );
 }
 
-function ClassCard({ item, day, dim }: { item: ClassItem; day: ScheduleDay; dim: boolean }) {
-  const type = classType(item.type);
+function ViewPill({
+  view,
+  active,
+  onClick,
+}: {
+  view: ScheduleView;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button className={"view-pill" + (active ? " on" : "")} onClick={onClick}>
+      {VIEW_LABELS[view]}
+    </button>
+  );
+}
+
+function ClassCard({
+  item,
+  day,
+  dim,
+  type,
+}: {
+  item: ClassItem;
+  day: ScheduleDay;
+  dim: boolean;
+  type: ClassType;
+}) {
   return (
     <div className={"class-card" + (dim ? " dim" : "")} style={{ borderLeftColor: type.color }}>
       <div className="time">{item.time}</div>
@@ -45,12 +77,15 @@ function ClassCard({ item, day, dim }: { item: ClassItem; day: ScheduleDay; dim:
 }
 
 export function Schedule({ standalone = false }: { standalone?: boolean }) {
-  const { week, types, source, loading } = useSchedule();
+  const [view, setView] = useState<ScheduleView>("week");
+  const { days, types, source, loading, range, emptyMessage } = useSchedule(view);
 
   const [active, setActive] = useState<Set<string> | null>(null);
   // Default to all types active; recomputed when the type list changes.
   const allIds = useMemo(() => new Set(types.map((t) => t.id)), [types]);
   const activeSet = active ?? allIds;
+  const typeById = useMemo(() => new Map(types.map((t) => [t.id, t])), [types]);
+  const hasClasses = days.some((day) => day.items.length > 0);
 
   const toggle = (id: string) => {
     setActive((prev) => {
@@ -67,7 +102,21 @@ export function Schedule({ standalone = false }: { standalone?: boolean }) {
   return (
     <section className={`schedule${standalone ? " standalone" : ""}`} id="schedule">
       <div className="container-x">
-        <div className="filter-row" style={{ justifyContent: "space-between", alignItems: "center" }}>
+        <div className="schedule-topline">
+          <div className="view-row" aria-label="Schedule view">
+            {(["day", "week", "month"] as const).map((candidate) => (
+              <ViewPill
+                key={candidate}
+                view={candidate}
+                active={view === candidate}
+                onClick={() => setView(candidate)}
+              />
+            ))}
+          </div>
+          <span className="schedule-range-label">{range.label}</span>
+        </div>
+
+        <div className="filter-row">
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {types.map((t) => (
               <FilterPill key={t.id} type={t} active={activeSet} onClick={() => toggle(t.id)} />
@@ -78,25 +127,35 @@ export function Schedule({ standalone = false }: { standalone?: boolean }) {
           </button>
         </div>
 
-        <div className="sched-grid">
-          {week.map((day) => (
-            <div className="sched-day" key={day.iso}>
-              <div>
-                <div className="day">{day.day}</div>
-                <div className="date">{day.date}</div>
+        {!loading && !hasClasses ? (
+          <div className="schedule-empty">{emptyMessage}</div>
+        ) : (
+          <div className={`sched-grid sched-grid-${view}`}>
+            {days.map((day) => (
+              <div className="sched-day" key={day.iso}>
+                <div>
+                  <div className="day">{day.day}</div>
+                  <div className="date">{day.date}</div>
+                </div>
+                {day.closed ? (
+                  <div className="closed">{day.closed}</div>
+                ) : day.items.length === 0 ? (
+                  <div className="closed">No classes</div>
+                ) : (
+                  day.items.map((it, index) => (
+                    <ClassCard
+                      key={`${day.iso}-${it.start ?? it.time}-${it.type}-${index}`}
+                      item={it}
+                      day={day}
+                      dim={!activeSet.has(it.type)}
+                      type={typeById.get(it.type) ?? classType(it.type)}
+                    />
+                  ))
+                )}
               </div>
-              {day.closed ? (
-                <div className="closed">{day.closed}</div>
-              ) : day.items.length === 0 ? (
-                <div className="closed">No classes</div>
-              ) : (
-                day.items.map((it, i) => (
-                  <ClassCard key={i} item={it} day={day} dim={!activeSet.has(it.type)} />
-                ))
-              )}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         <div
           style={{
