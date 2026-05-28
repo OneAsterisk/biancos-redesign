@@ -69,7 +69,7 @@ export const FACILITY_PHOTOS: FacilityPhoto[] = [
   },
   {
     id: "fac-cst",
-    label: "CST class",
+    label: "CST Logo",
     placeholder: "CST group on the floor",
     src: `${base}/CSTs-768x1024.jpg`,
     width: 768,
@@ -77,15 +77,15 @@ export const FACILITY_PHOTOS: FacilityPhoto[] = [
   },
   {
     id: "fac-cst-1",
-    label: "CST training",
-    placeholder: "CST coached session",
+    label: "CST Entrance",
+    placeholder: "CST entrance area",
     src: `${base}/CSTs1-768x1024.jpg`,
     width: 768,
     height: 1024,
   },
   {
     id: "fac-cst-2",
-    label: "CST group work",
+    label: "CST Power Area",
     placeholder: "CST members training together",
     src: `${base}/CSTS2-768x1024.jpg`,
     width: 768,
@@ -93,7 +93,7 @@ export const FACILITY_PHOTOS: FacilityPhoto[] = [
   },
   {
     id: "fac-cst-3",
-    label: "CST on the floor",
+    label: "CST Room",
     placeholder: "CST class in progress",
     src: `${base}/CSTS3-768x1024.jpg`,
     width: 768,
@@ -101,7 +101,7 @@ export const FACILITY_PHOTOS: FacilityPhoto[] = [
   },
   {
     id: "fac-cst-5",
-    label: "CST session",
+    label: "CST Room",
     placeholder: "CST class moment",
     src: `${base}/CSTS5-768x1024.jpg`,
     width: 768,
@@ -109,7 +109,7 @@ export const FACILITY_PHOTOS: FacilityPhoto[] = [
   },
   {
     id: "fac-cst-6",
-    label: "CST class wide shot",
+    label: "CST Room wide shot",
     placeholder: "CST class from above",
     src: `${base}/CSTS6-768x576.jpg`,
     width: 768,

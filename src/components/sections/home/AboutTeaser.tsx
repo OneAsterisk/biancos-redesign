@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { ImageSlot } from "../../ImageSlot";
 import { ASSETS, IMAGE_PLACEHOLDERS } from "../../../data/assets";
+import { getYearsOpenWords } from "../../../lib/yearsStrong";
 
 export function AboutTeaser() {
+  const yearsOpenWords = getYearsOpenWords();
   return (
     <section className="heritage grain">
       <div className="container-x">
@@ -12,8 +14,8 @@ export function AboutTeaser() {
             <h2 className="section-title" style={{ marginTop: 18 }}>
               A hometown gym,
               <br />
-              <span style={{ color: "var(--red)" }}>twenty-eight</span> years
-              strong.
+              <span style={{ color: "var(--red)" }}>{yearsOpenWords}</span>{" "}
+              years strong.
             </h2>
             <p
               style={{
